@@ -69,35 +69,38 @@ function Component() {
               </AccordionTrigger>
               <AccordionContent>
                 <div className="space-y-2">
-                  <div>
-                    <ul className="list-none list-inside space-y-2">
-                      {Object.entries(result.lan_dict)
-                        .filter(([key]) =>
-                          showLanguages.includes(key as ShowLanguage)
-                        )
-                        .sort()
-                        .map(([key, value]) => (
-                          <li key={key} className="flex flex-col space-y-1">
-                            <div className="flex flex-row items-center space-x-2">
-                              <span className="text-xs text-muted-foreground text-nowrap">
-                                {t(
-                                  SHOW_LANGUAGE_DESCRIPTION_I18N_KEY_MAP[
-                                    key as ShowLanguage
-                                  ]
-                                )}
-                              </span>
-                              <CopyButton toCopy={value} />
-                            </div>
-                            <span
-                              dangerouslySetInnerHTML={{
-                                __html: preprocessResultString(value),
-                              }}
-                            />
-                          </li>
-                        ))}
-                    </ul>
-                  </div>
-                  <div></div>
+                  <ul className="list-none list-inside space-y-2">
+                    {Object.entries(result.lan_dict)
+                      .filter(([key]) =>
+                        showLanguages.includes(key as ShowLanguage)
+                      )
+                      .sort()
+                      .map(([key, value]) => (
+                        <li key={key} className="flex flex-col space-y-1">
+                          <div className="flex flex-row items-center space-x-2">
+                            <span className="text-xs text-muted-foreground text-nowrap">
+                              {t(
+                                SHOW_LANGUAGE_DESCRIPTION_I18N_KEY_MAP[
+                                  key as ShowLanguage
+                                ]
+                              )}
+                            </span>
+                            <CopyButton toCopy={value} />
+                          </div>
+                          <span
+                            dangerouslySetInnerHTML={{
+                              __html: preprocessResultString(value),
+                            }}
+                          />
+                        </li>
+                      ))}
+                  </ul>
+                  <Badge
+                    variant="outline"
+                    className="text-xs text-muted-foreground self-end"
+                  >
+                    ID: {result.vocabulary_id}
+                  </Badge>
                 </div>
               </AccordionContent>
             </AccordionItem>
@@ -204,6 +207,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { useTranslation } from "react-i18next";
+import { Badge } from "@/components/ui/badge";
 
 export function PaginationComponent() {
   const { total_page: totalPage } = Route.useLoaderData();
