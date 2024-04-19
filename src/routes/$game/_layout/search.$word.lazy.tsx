@@ -97,7 +97,7 @@ function Component() {
                   </ul>
                   <Badge
                     variant="outline"
-                    className="text-xs text-muted-foreground self-end"
+                    className="text-xs text-muted-foreground self-end font-normal"
                   >
                     ID: {result.vocabulary_id}
                   </Badge>
