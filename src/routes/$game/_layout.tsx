@@ -33,7 +33,7 @@ export const Route = createFileRoute("/$game/_layout")({
 function Component() {
   return (
     <div>
-      <nav className="max-w-screen-xl flex items-center justify-between mx-auto px-6 py-2 flex-nowrap">
+      <nav className="max-w-screen-sm flex items-center justify-between mx-auto px-6 py-2 flex-nowrap">
         <Link to="/" className="text-2xl font-semibold whitespace-nowrap">
           Pizza Dictionary
         </Link>

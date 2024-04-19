@@ -31,12 +31,16 @@ const Index = () => {
   };
 
   return (
-    <div className="flex flex-col pt-32 justify-center items-center space-y-6 max-w-screen-lg mx-auto">
-      <h3 className="text-xl text-muted-foreground">Searching Dictionary in</h3>
-      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
-        {gameDescription}
-      </h1>
-      <form className="pt-7 mx-5 w-5/6 sm:w-3/4" onSubmit={handleSubmit}>
+    <div className="flex flex-col pt-32 justify-center items-center space-y-6 max-w-screen-lg mx-auto px-6">
+      <div className="text-center">
+        <h3 className="text-xl text-muted-foreground">
+          Searching Dictionary in
+        </h3>
+        <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+          {gameDescription}
+        </h1>
+      </div>
+      <form className="pt-7 mx-5 w-full" onSubmit={handleSubmit}>
         <Input
           className="basis"
           placeholder={QUERY_PLACEHOLDER_MAP[game]}

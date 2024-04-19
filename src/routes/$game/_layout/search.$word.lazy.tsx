@@ -35,10 +35,7 @@ function Component() {
   return (
     <Layout>
       <PaginationComponent />
-      <Accordion
-        type="multiple"
-        className="w-full"
-      >
+      <Accordion type="multiple" className="w-full">
         {result.results.length === 0 ? (
           <div className="text-center text-muted-foreground">
             No results found.
@@ -54,7 +51,12 @@ function Component() {
                   <span className="text-xs text-muted-foreground">
                     {SHOW_LANGUAGE_DESCRIPTION_MAP[result.target_lang]}
                   </span>
-                  <span className="text-left">{result.target}</span>
+                  <span
+                    className="text-left"
+                    dangerouslySetInnerHTML={{
+                      __html: preprocessResultString(result.target),
+                    }}
+                  />
                 </div>
               </AccordionTrigger>
               <AccordionContent>
@@ -80,8 +82,11 @@ function Component() {
                                 <CopyButton toCopy={value} />
                               </button>
                             </div>
-
-                            <span>{value}</span>
+                            <span
+                              dangerouslySetInnerHTML={{
+                                __html: preprocessResultString(value),
+                              }}
+                            />
                           </li>
                         ))}
                     </ul>
@@ -99,7 +104,7 @@ function Component() {
 
 function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col justify-center items-center space-y-6 max-w-screen-lg mx-auto px-6 w-5/6 sm:w-3/4">
+    <div className="flex flex-col justify-center items-center space-y-6 max-w-screen-sm mx-auto px-6">
       <QueryInput />
       {children}
     </div>
@@ -291,4 +296,9 @@ export function PaginationComponent() {
       </PaginationContent>
     </Pagination>
   );
+}
+
+function preprocessResultString(result: string): string {
+  const regex = /\{RUBY_B#(.*?)\}(.*?)\{RUBY_E#\}/g;
+  return result.replace(regex, "<ruby>$2<rt>$1</rt></ruby>");
 }
