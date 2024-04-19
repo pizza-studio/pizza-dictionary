@@ -233,7 +233,7 @@ export function PaginationComponent() {
   }
 
   return (
-    <Pagination className="w-full">
+    <Pagination className="w-full sticky top-0 py-1 bg-background">
       <PaginationContent>
         <PaginationItem className="hidden sm:block">
           <Link
