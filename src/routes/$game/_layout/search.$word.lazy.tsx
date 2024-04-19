@@ -307,7 +307,10 @@ export function PaginationComponent() {
   );
 }
 
-function preprocessResultString(result: string): string {
+function preprocessResultString(translation: string): string {
   const regex = /\{RUBY_B#(.*?)\}(.*?)\{RUBY_E#\}/g;
-  return result.replace(regex, "<ruby>$2<rt>$1</rt></ruby>");
+  let result = translation.replace(regex, "<ruby>$2<rt>$1</rt></ruby>");
+  // replace /n with <br>
+  result = result.replace(/\\n/g, "<br>");
+  return result;
 }
