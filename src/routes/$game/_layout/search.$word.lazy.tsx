@@ -104,7 +104,7 @@ function Component() {
 
 function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col justify-center items-center space-y-6 max-w-screen-sm mx-auto px-6">
+    <div className="flex flex-col justify-center items-center space-y-3 max-w-screen-sm mx-auto px-6 pt-5">
       <QueryInput />
       {children}
     </div>
@@ -118,7 +118,7 @@ function QueryInput() {
 
   return (
     <form
-      className="pt-7 mx-6 w-full"
+      className="w-full"
       onSubmit={(e) => {
         e.preventDefault();
         if (!query) return;
@@ -237,7 +237,7 @@ export function PaginationComponent() {
             <PaginationPrevious />
           </Link>
         </PaginationItem>
-        <div className="flex flex-row sm:justify-center justify-start w-full gap-1">
+        <div className="flex flex-row sm:justify-center justify-start w-full">
           <PaginationItem
             className={
               currentPage == 1 || currentPage == 2 ? "" : "hidden md:block"

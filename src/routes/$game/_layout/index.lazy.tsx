@@ -31,7 +31,7 @@ const Index = () => {
   };
 
   return (
-    <div className="flex flex-col pt-32 justify-center items-center space-y-6 max-w-screen-lg mx-auto px-6">
+    <div className="flex flex-col pt-32 justify-center items-center space-y-6 max-w-screen-sm mx-auto px-6">
       <div className="text-center">
         <h3 className="text-xl text-muted-foreground">
           Searching Dictionary in

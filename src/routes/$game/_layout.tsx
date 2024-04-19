@@ -24,7 +24,15 @@ import {
 } from "@/components/ui/popover";
 import { atom, useAtom } from "jotai";
 import { Button } from "@/components/ui/button";
-import { BookA, ChevronsUpDown, Languages, Sun } from "lucide-react";
+import {
+  BookA,
+  ChevronsUpDown,
+  Languages,
+  Moon,
+  Sun,
+  SunMoon,
+} from "lucide-react";
+import { useTheme, Theme } from "@/components/ThemeProvider";
 
 export const Route = createFileRoute("/$game/_layout")({
   component: Component,
@@ -189,12 +197,12 @@ function DropDownMenu() {
           </DropdownMenuSub>
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>
-              <Sun className="mr-2 h-4 w-4" />
+              <SunMoon className="mr-2 h-4 w-4" />
               <span>Appreance</span>
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
-                <DropdownMenuItem>Not implemented</DropdownMenuItem>
+                <ThemePicker />
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
@@ -211,5 +219,29 @@ function DropDownMenu() {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+}
+
+function ThemePicker() {
+  const [theme, setTheme] = useTheme();
+
+  return (
+    <DropdownMenuRadioGroup
+      value={theme}
+      onValueChange={(value) => setTheme(value as Theme)}
+    >
+      <DropdownMenuRadioItem value={"light" as Theme}>
+        <Sun className="mr-2 h-4 w-4" />
+        Light
+      </DropdownMenuRadioItem>
+      <DropdownMenuRadioItem value={"dark" as Theme}>
+        <Moon className="mr-2 h-4 w-4" />
+        Dark
+      </DropdownMenuRadioItem>
+      <DropdownMenuRadioItem value={"system" as Theme}>
+        <SunMoon className="mr-2 h-4 w-4" />
+        System
+      </DropdownMenuRadioItem>
+    </DropdownMenuRadioGroup>
   );
 }

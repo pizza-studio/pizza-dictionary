@@ -13,12 +13,12 @@ function Index() {
         Pizza Dictionary
       </h1>
       <p className="">
-        <span className="scroll-m-20 font-semibold tracking-tight text-slate-600">
-          by {"  "}
+        <span className="scroll-m-20 font-normal text-muted-foreground">
+          by {" "}
         </span>
         <a
           href="https://github.com/pizza-studio"
-          className="scroll-m-20 text-xl font-semibold tracking-tight text-slate-700 hover:underline"
+          className="scroll-m-20 text-xl font-normal text-muted-foreground hover:underline"
         >
           Pizza Studio
         </a>

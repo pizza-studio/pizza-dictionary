@@ -3,6 +3,8 @@ import "./App.css";
 
 import { routeTree } from "./routeTree.gen";
 
+import { ThemeProvider } from "./components/ThemeProvider";
+
 const router = createRouter({ routeTree });
 
 declare module "@tanstack/react-router" {
@@ -12,7 +14,11 @@ declare module "@tanstack/react-router" {
 }
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <ThemeProvider>
+      <RouterProvider router={router} />
+    </ThemeProvider>
+  );
 }
 
 export default App;
