@@ -160,18 +160,19 @@ function DropDownMenu() {
   );
 }
 
+import {
+  SupportedLanguage,
+  supportedLanguages,
+  getFallbackLanguage,
+} from "@/i18n/i18n";
+
 function LanguagePicker() {
   const { t, i18n } = useTranslation();
 
-  enum SupportLanguage {
-    ZH_CHS = "zh-CHS",
-    EN = "en",
-  }
-
-  const LANGUAGE_I18N_KEY_MAP: { [key in SupportLanguage]: string } = {
-    [SupportLanguage.ZH_CHS]: "简体中文",
-    [SupportLanguage.EN]: "English",
-  } as const;
+  const LANGUAGE_I18N_KEY_MAP = {
+    "zh-Hans": "简体中文",
+    en: "English",
+  } as const satisfies { [key in SupportedLanguage]: string };
 
   return (
     <DropdownMenuSub>
@@ -182,17 +183,17 @@ function LanguagePicker() {
       <DropdownMenuPortal>
         <DropdownMenuSubContent>
           <DropdownMenuRadioGroup
-            value={i18n.language as SupportLanguage}
+            value={getFallbackLanguage(i18n.language)}
             onValueChange={(value) =>
-              i18n.changeLanguage(value as SupportLanguage)
+              i18n.changeLanguage(value as SupportedLanguage)
             }
           >
-            {Object.values(SupportLanguage).map((language) => (
+            {supportedLanguages.map((language) => (
               <DropdownMenuRadioItem
                 key={language}
-                value={language as SupportLanguage}
+                value={language as SupportedLanguage}
               >
-                {LANGUAGE_I18N_KEY_MAP[language as SupportLanguage]}
+                {LANGUAGE_I18N_KEY_MAP[language as SupportedLanguage]}
               </DropdownMenuRadioItem>
             ))}
           </DropdownMenuRadioGroup>

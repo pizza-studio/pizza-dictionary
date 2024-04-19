@@ -7,22 +7,34 @@ import LanguageDetector from "i18next-browser-languagedetector";
 const debug = process.env.NODE_ENV !== "production";
 
 import en from "./en/translation.json";
-import zh_CHS from "./zh-CHS/translation.json";
-
-// don't want to use this?
-// have a look at the Quick start guide
-// for passing in lng and translations on init
+import zh_Hans from "./zh-Hans/translation.json";
 
 const resources = {
-  "en": {
+  en: {
     translation: en,
   },
-  "zh-CHS": {
-    translation: zh_CHS,
+  "zh-Hans": {
+    translation: zh_Hans,
   },
-};
+} as const;
+
+export type SupportedLanguage = keyof typeof resources;
+export const supportedLanguages = Object.keys(resources) as SupportedLanguage[];
 
 export const defaultNS = "translation";
+
+const fallbackLng: Record<string, SupportedLanguage[]> = {
+  "zh-CN": ["zh-Hans", "en"],
+  "zh-SG": ["zh-Hans", "en"],
+  "zh-MY": ["zh-Hans", "en"],
+  zh: ["zh-Hans", "en"],
+  default: ["en"],
+} as const;
+
+export function getFallbackLanguage(lang: string): SupportedLanguage {
+  // return first match
+  return (fallbackLng[lang] || fallbackLng.default)[0] as SupportedLanguage;
+}
 
 i18n
   // load translation using http -> see /public/locales (i.e. https://github.com/i18next/react-i18next/tree/master/example/react/public/locales)
@@ -37,7 +49,7 @@ i18n
   // init i18next
   // for all options read: https://www.i18next.com/overview/configuration-options
   .init({
-    fallbackLng: "en",
+    fallbackLng: fallbackLng,
     debug: debug,
 
     resources: resources,
