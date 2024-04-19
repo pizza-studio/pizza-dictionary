@@ -78,9 +78,7 @@ function Component() {
                                   ]
                                 }
                               </span>
-                              <button className="shrink-0">
-                                <CopyButton toCopy={value} />
-                              </button>
+                              <CopyButton toCopy={value} />
                             </div>
                             <span
                               dangerouslySetInnerHTML={{

@@ -128,12 +128,6 @@ import { Github, Menu } from "lucide-react";
 import { showLanguagesAtom } from "@/lib/atom";
 
 function DropDownMenu() {
-  const navigate = useNavigate();
-
-  const { game: currentGame }: { game: Game } = Route.useParams();
-
-  const [showingLangauges, setShowLanguages] = useAtom(showLanguagesAtom);
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -142,46 +136,9 @@ function DropDownMenu() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuRadioGroup
-          value={currentGame}
-          onValueChange={(newGame) => {
-            navigate({ to: "/$game", params: { game: newGame } });
-          }}
-          className="block sm:hidden"
-        >
-          {Object.values(Game).map((game) => (
-            <DropdownMenuRadioItem value={game} key={game}>
-              {GAME_DESCRIPTION_MAP[game as Game]}
-            </DropdownMenuRadioItem>
-          ))}
-        </DropdownMenuRadioGroup>
-        <DropdownMenuSeparator className="block sm:hidden" />
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger>
-            <BookA className="mr-2 h-4 w-4" />
-            <span>Result Language</span>
-          </DropdownMenuSubTrigger>
-          <DropdownMenuPortal>
-            <DropdownMenuSubContent>
-              {Object.values(ShowLanguage).map((language) => (
-                <DropdownMenuCheckboxItem
-                  key={language}
-                  checked={showingLangauges.includes(language)}
-                  onSelect={(e) => {
-                    e.preventDefault();
-                    setShowLanguages((prev) =>
-                      prev.includes(language)
-                        ? prev.filter((lang) => lang !== language)
-                        : [...prev, language]
-                    );
-                  }}
-                >
-                  {SHOW_LANGUAGE_DESCRIPTION_MAP[language]}
-                </DropdownMenuCheckboxItem>
-              ))}
-            </DropdownMenuSubContent>
-          </DropdownMenuPortal>
-        </DropdownMenuSub>
+        <DropdownGamePicker />
+
+        <TargetLanguageSelector />
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuSub>
@@ -195,17 +152,7 @@ function DropDownMenu() {
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
-          <DropdownMenuSub>
-            <DropdownMenuSubTrigger>
-              <SunMoon className="mr-2 h-4 w-4" />
-              <span>Appreance</span>
-            </DropdownMenuSubTrigger>
-            <DropdownMenuPortal>
-              <DropdownMenuSubContent>
-                <ThemePicker />
-              </DropdownMenuSubContent>
-            </DropdownMenuPortal>
-          </DropdownMenuSub>
+          <ThemePicker />
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
@@ -222,26 +169,98 @@ function DropDownMenu() {
   );
 }
 
+function DropdownGamePicker() {
+  const navigate = useNavigate();
+
+  const { game: currentGame }: { game: Game } = Route.useParams();
+
+  return (
+    <div className="block sm:hidden">
+      <DropdownMenuRadioGroup
+        value={currentGame}
+        onValueChange={(newGame) => {
+          navigate({ to: "/$game", params: { game: newGame } });
+        }}
+      >
+        {Object.values(Game).map((game) => (
+          <DropdownMenuRadioItem value={game} key={game}>
+            {GAME_DESCRIPTION_MAP[game as Game]}
+          </DropdownMenuRadioItem>
+        ))}
+      </DropdownMenuRadioGroup>
+      <DropdownMenuSeparator />
+    </div>
+  );
+}
+
+function TargetLanguageSelector() {
+  const [showingLangauges, setShowLanguages] = useAtom(showLanguagesAtom);
+  return (
+    <DropdownMenuSub>
+      <DropdownMenuSubTrigger>
+        <BookA className="mr-2 h-4 w-4" />
+        <span>Result Language</span>
+      </DropdownMenuSubTrigger>
+      <DropdownMenuPortal>
+        <DropdownMenuSubContent>
+          {Object.values(ShowLanguage).map((language) => (
+            <DropdownMenuCheckboxItem
+              key={language}
+              checked={showingLangauges.includes(language)}
+              onSelect={(e) => {
+                e.preventDefault();
+                setShowLanguages((prev) =>
+                  prev.includes(language)
+                    ? prev.filter((lang) => lang !== language)
+                    : [...prev, language]
+                );
+              }}
+            >
+              {SHOW_LANGUAGE_DESCRIPTION_MAP[language]}
+            </DropdownMenuCheckboxItem>
+          ))}
+        </DropdownMenuSubContent>
+      </DropdownMenuPortal>
+    </DropdownMenuSub>
+  );
+}
+
 function ThemePicker() {
   const [theme, setTheme] = useTheme();
 
   return (
-    <DropdownMenuRadioGroup
-      value={theme}
-      onValueChange={(value) => setTheme(value as Theme)}
-    >
-      <DropdownMenuRadioItem value={"light" as Theme}>
-        <Sun className="mr-2 h-4 w-4" />
-        Light
-      </DropdownMenuRadioItem>
-      <DropdownMenuRadioItem value={"dark" as Theme}>
-        <Moon className="mr-2 h-4 w-4" />
-        Dark
-      </DropdownMenuRadioItem>
-      <DropdownMenuRadioItem value={"system" as Theme}>
-        <SunMoon className="mr-2 h-4 w-4" />
-        System
-      </DropdownMenuRadioItem>
-    </DropdownMenuRadioGroup>
+    <DropdownMenuSub>
+      <DropdownMenuSubTrigger>
+        {
+          {
+            light: <Sun className="mr-2 h-4 w-4" />,
+            dark: <Moon className="mr-2 h-4 w-4" />,
+            system: <SunMoon className="mr-2 h-4 w-4" />,
+          }[theme]
+        }
+        <span>Appreance</span>
+      </DropdownMenuSubTrigger>
+      <DropdownMenuPortal>
+        <DropdownMenuSubContent>
+          <DropdownMenuRadioGroup
+            value={theme}
+            onValueChange={(value) => setTheme(value as Theme)}
+          >
+            <DropdownMenuRadioItem value={"light" as Theme}>
+              <Sun className="mr-2 h-4 w-4" />
+              Light
+            </DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value={"dark" as Theme}>
+              <Moon className="mr-2 h-4 w-4" />
+              Dark
+            </DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value={"system" as Theme}>
+              <SunMoon className="mr-2 h-4 w-4" />
+              System
+            </DropdownMenuRadioItem>
+          </DropdownMenuRadioGroup>
+        </DropdownMenuSubContent>
+      </DropdownMenuPortal>
+    </DropdownMenuSub>
   );
 }
