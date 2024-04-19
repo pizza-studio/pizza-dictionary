@@ -110,7 +110,7 @@ function Component() {
 
 function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col justify-center items-center space-y-3 max-w-screen-sm mx-auto px-6 pt-5">
+    <div className="flex flex-col justify-center items-center space-y-2 max-w-screen-sm mx-auto px-6 pt-5">
       <QueryInput />
       {children}
     </div>
