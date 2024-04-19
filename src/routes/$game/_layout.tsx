@@ -9,7 +9,6 @@ import { Game, ShowLanguage } from "@/lib/types";
 import {
   GAME_DESCRIPTION_I18N_KEY_MAP,
   SHOW_LANGUAGE_DESCRIPTION_I18N_KEY_MAP,
-  QUERY_PLACEHOLDER_MAP
 } from "@/lib/description";
 import {
   Command,
