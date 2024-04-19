@@ -1,0 +1,50 @@
+{
+    "General": {
+        "AppName": "Pizza Dictionary",
+        "PizzaStudio": "Pizza Studio",
+        "Genshin": "Genshin Impact",
+        "HSR": "Honkai: Star Rail",
+        "Language": {
+            "en": "English",
+            "chs": "Chinese (Simplified)",
+            "cht": "Chinese (Traditional)",
+            "pt": "Portuguese",
+            "jp": "Japanese",
+            "ru": "Russian",
+            "th": "Thai",
+            "de": "German",
+            "es": "Spanish",
+            "id": "Indonesian",
+            "kr": "Korean",
+            "vi": "Vietnamese",
+            "fr": "French"
+        }
+    },
+    "Search": {
+        "Index": {
+            "SearchIn": "Search Dictionary in",
+            "Placeholder": {
+                "Genshin": "Mondstadt, Venti, Sweet Flower...",
+                "HSR": "Herta Space Station, Himeko, Calyx..."
+            }
+        },
+        "Searching": {
+            "Pagination": {
+                "Previous": "Previous",
+                "Next": "Next"
+            }
+        },
+        "Setting": {
+            "ResultLanguage": "Translation Languages",
+            "Appreance": {
+                "Trigger": "Appreance",
+                "Light": "Light",
+                "Dark": "Dark",
+                "System": "System"
+            }
+        },
+        "Language": {
+            "Trigger": "Language"
+        }
+    }
+}

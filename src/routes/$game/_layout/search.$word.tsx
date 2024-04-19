@@ -1,9 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import {
-  GAME_DICTIONARY_API_ENDPOINT_MAP,
-  Game,
-  ShowLanguage,
-} from "@/lib/types";
+import { Game, ShowLanguage } from "@/lib/types";
+import { GAME_DICTIONARY_API_ENDPOINT_MAP } from "@/lib/constant";
 
 export const Route = createFileRoute("/$game/_layout/search/$word")({
   validateSearch: (search) =>

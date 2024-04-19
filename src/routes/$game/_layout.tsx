@@ -5,12 +5,11 @@ import {
   useNavigate,
 } from "@tanstack/react-router";
 import { Separator } from "@/components/ui/separator";
+import { Game, ShowLanguage } from "@/lib/types";
 import {
-  Game,
-  GAME_DESCRIPTION_MAP,
-  ShowLanguage,
-  SHOW_LANGUAGE_DESCRIPTION_MAP,
-} from "@/lib/types";
+  GAME_DESCRIPTION_I18N_KEY_MAP,
+  SHOW_LANGUAGE_DESCRIPTION_I18N_KEY_MAP,
+} from "@/lib/description";
 import {
   Command,
   CommandGroup,
@@ -39,11 +38,12 @@ export const Route = createFileRoute("/$game/_layout")({
 });
 
 function Component() {
+  const { t } = useTranslation();
   return (
     <div>
       <nav className="max-w-screen-sm flex items-center justify-between mx-auto px-6 py-2 flex-nowrap">
         <Link to="/" className="text-2xl font-semibold whitespace-nowrap">
-          Pizza Dictionary
+          {t("General.AppName")}
         </Link>
         <div className="flex flex-row flex-nowrap space-x-2 items-center justify-between">
           <div className="hidden sm:block">
@@ -61,11 +61,12 @@ function Component() {
 const popoverPopedAtom = atom(false);
 
 function GamePicker() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const { game: currentGame }: { game: Game } = Route.useParams();
 
-  const gameDescription = GAME_DESCRIPTION_MAP[currentGame];
+  const gameDescription = GAME_DESCRIPTION_I18N_KEY_MAP[currentGame];
 
   const [popoverPoped, setPopoverPoped] = useAtom(popoverPopedAtom);
 
@@ -78,7 +79,7 @@ function GamePicker() {
           aria-expanded={popoverPoped}
           className="max-w-screen-sm justify-between"
         >
-          <p>{gameDescription}</p>
+          <p>{t(gameDescription)}</p>
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -97,7 +98,7 @@ function GamePicker() {
                     setPopoverPoped(false);
                   }}
                 >
-                  {GAME_DESCRIPTION_MAP[game as Game]}
+                  {t(GAME_DESCRIPTION_I18N_KEY_MAP[game as Game])}
                 </CommandItem>
               ))}
             </CommandGroup>
@@ -126,6 +127,7 @@ import {
 
 import { Github, Menu } from "lucide-react";
 import { showLanguagesAtom } from "@/lib/atom";
+import { useTranslation } from "react-i18next";
 
 function DropDownMenu() {
   return (
@@ -137,21 +139,10 @@ function DropDownMenu() {
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownGamePicker />
-
         <TargetLanguageSelector />
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuSub>
-            <DropdownMenuSubTrigger>
-              <Languages className="mr-2 h-4 w-4" />
-              <span>Languages</span>
-            </DropdownMenuSubTrigger>
-            <DropdownMenuPortal>
-              <DropdownMenuSubContent>
-                <DropdownMenuItem>Not implemented</DropdownMenuItem>
-              </DropdownMenuSubContent>
-            </DropdownMenuPortal>
-          </DropdownMenuSub>
+          <LanguagePicker />
           <ThemePicker />
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
@@ -169,7 +160,51 @@ function DropDownMenu() {
   );
 }
 
+import {
+  SupportedLanguage,
+  supportedLanguages,
+  getFallbackLanguage,
+} from "@/i18n/i18n";
+
+function LanguagePicker() {
+  const { t, i18n } = useTranslation();
+
+  const LANGUAGE_I18N_KEY_MAP = {
+    "zh-Hans": "简体中文",
+    en: "English",
+  } as const satisfies { [key in SupportedLanguage]: string };
+
+  return (
+    <DropdownMenuSub>
+      <DropdownMenuSubTrigger>
+        <Languages className="mr-2 h-4 w-4" />
+        <span>{t("Search.Language.Trigger")}</span>
+      </DropdownMenuSubTrigger>
+      <DropdownMenuPortal>
+        <DropdownMenuSubContent>
+          <DropdownMenuRadioGroup
+            value={getFallbackLanguage(i18n.language)}
+            onValueChange={(value) =>
+              i18n.changeLanguage(value as SupportedLanguage)
+            }
+          >
+            {supportedLanguages.map((language) => (
+              <DropdownMenuRadioItem
+                key={language}
+                value={language as SupportedLanguage}
+              >
+                {LANGUAGE_I18N_KEY_MAP[language as SupportedLanguage]}
+              </DropdownMenuRadioItem>
+            ))}
+          </DropdownMenuRadioGroup>
+        </DropdownMenuSubContent>
+      </DropdownMenuPortal>
+    </DropdownMenuSub>
+  );
+}
+
 function DropdownGamePicker() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const { game: currentGame }: { game: Game } = Route.useParams();
@@ -184,7 +219,7 @@ function DropdownGamePicker() {
       >
         {Object.values(Game).map((game) => (
           <DropdownMenuRadioItem value={game} key={game}>
-            {GAME_DESCRIPTION_MAP[game as Game]}
+            {t(GAME_DESCRIPTION_I18N_KEY_MAP[game as Game])}
           </DropdownMenuRadioItem>
         ))}
       </DropdownMenuRadioGroup>
@@ -194,12 +229,13 @@ function DropdownGamePicker() {
 }
 
 function TargetLanguageSelector() {
+  const { t } = useTranslation();
   const [showingLangauges, setShowLanguages] = useAtom(showLanguagesAtom);
   return (
     <DropdownMenuSub>
       <DropdownMenuSubTrigger>
         <BookA className="mr-2 h-4 w-4" />
-        <span>Result Language</span>
+        <span>{t("Search.Setting.ResultLanguage")}</span>
       </DropdownMenuSubTrigger>
       <DropdownMenuPortal>
         <DropdownMenuSubContent>
@@ -216,7 +252,7 @@ function TargetLanguageSelector() {
                 );
               }}
             >
-              {SHOW_LANGUAGE_DESCRIPTION_MAP[language]}
+              {t(SHOW_LANGUAGE_DESCRIPTION_I18N_KEY_MAP[language])}
             </DropdownMenuCheckboxItem>
           ))}
         </DropdownMenuSubContent>
@@ -226,6 +262,7 @@ function TargetLanguageSelector() {
 }
 
 function ThemePicker() {
+  const { t } = useTranslation();
   const [theme, setTheme] = useTheme();
 
   return (
@@ -238,7 +275,7 @@ function ThemePicker() {
             system: <SunMoon className="mr-2 h-4 w-4" />,
           }[theme]
         }
-        <span>Appreance</span>
+        <span>{t("Search.Setting.Appreance.Trigger")}</span>
       </DropdownMenuSubTrigger>
       <DropdownMenuPortal>
         <DropdownMenuSubContent>
@@ -248,15 +285,15 @@ function ThemePicker() {
           >
             <DropdownMenuRadioItem value={"light" as Theme}>
               <Sun className="mr-2 h-4 w-4" />
-              Light
+              {t("Search.Setting.Appreance.Light")}
             </DropdownMenuRadioItem>
             <DropdownMenuRadioItem value={"dark" as Theme}>
               <Moon className="mr-2 h-4 w-4" />
-              Dark
+              {t("Search.Setting.Appreance.Dark")}
             </DropdownMenuRadioItem>
             <DropdownMenuRadioItem value={"system" as Theme}>
               <SunMoon className="mr-2 h-4 w-4" />
-              System
+              {t("Search.Setting.Appreance.System")}
             </DropdownMenuRadioItem>
           </DropdownMenuRadioGroup>
         </DropdownMenuSubContent>

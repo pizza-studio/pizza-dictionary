@@ -11,7 +11,12 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { showLanguagesAtom } from "@/lib/atom";
-import { SHOW_LANGUAGE_DESCRIPTION_MAP, ShowLanguage } from "@/lib/types";
+import { Game, ShowLanguage } from "@/lib/types";
+
+import {
+  QUERY_PLACEHOLDER_MAP,
+  SHOW_LANGUAGE_DESCRIPTION_I18N_KEY_MAP,
+} from "@/lib/description";
 
 export const Route = createLazyFileRoute("/$game/_layout/search/$word")({
   pendingComponent: Pending,
@@ -29,6 +34,7 @@ function Pending() {
 }
 
 function Component() {
+  const { t } = useTranslation();
   const result = Route.useLoaderData();
   const showLanguages = useAtomValue(showLanguagesAtom);
 
@@ -49,7 +55,9 @@ function Component() {
               <AccordionTrigger>
                 <div className="flex flex-col items-start">
                   <span className="text-xs text-muted-foreground">
-                    {SHOW_LANGUAGE_DESCRIPTION_MAP[result.target_lang]}
+                    {t(
+                      SHOW_LANGUAGE_DESCRIPTION_I18N_KEY_MAP[result.target_lang]
+                    )}
                   </span>
                   <span
                     className="text-left"
@@ -72,11 +80,11 @@ function Component() {
                           <li key={key} className="flex flex-col space-y-1">
                             <div className="flex flex-row items-center space-x-2">
                               <span className="text-xs text-muted-foreground text-nowrap">
-                                {
-                                  SHOW_LANGUAGE_DESCRIPTION_MAP[
+                                {t(
+                                  SHOW_LANGUAGE_DESCRIPTION_I18N_KEY_MAP[
                                     key as ShowLanguage
                                   ]
-                                }
+                                )}
                               </span>
                               <CopyButton toCopy={value} />
                             </div>
@@ -111,7 +119,8 @@ function Layout({ children }: { children: React.ReactNode }) {
 
 function QueryInput() {
   const navigate = useNavigate();
-  const { game, word } = Route.useParams();
+  const { t } = useTranslation();
+  const { game, word }: { game: Game; word: string } = Route.useParams();
   const [query, setQuery] = useAtom(queryAtomFamily(word));
 
   return (
@@ -132,6 +141,7 @@ function QueryInput() {
       <Input
         className="basis"
         value={query}
+        placeholder={t(QUERY_PLACEHOLDER_MAP[game])}
         onChange={(e) => {
           e.preventDefault();
           setQuery(e.target.value);
@@ -193,6 +203,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { useTranslation } from "react-i18next";
 
 export function PaginationComponent() {
   const { total_page: totalPage } = Route.useLoaderData();
