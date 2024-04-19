@@ -3,19 +3,18 @@ export enum Game {
   STARRAIL = "hsr",
 }
 
-
 export enum ShowLanguage {
   ENGLISH = "en",
   CHINESE_SIMPLIFIED = "chs",
   CHINESE_TRADITIONAL = "cht",
-  PORTUGUESE = "pt",
   JAPANESE = "jp",
+  KOREAN = "kr",
+  FRENCH = "fr",
   RUSSIAN = "ru",
+  PORTUGUESE = "pt",
   THAI = "th",
   GERMAN = "de",
   SPANISH = "es",
   INDONESIAN = "id",
-  KOREAN = "kr",
   VIETNAMESE = "vi",
-  FRENCH = "fr",
 }
