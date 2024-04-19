@@ -200,22 +200,22 @@ export function PaginationComponent() {
   const { page: currentPage } = Route.useLoaderDeps();
   const params = Route.useParams();
 
-  if (totalPage == 0) {
+  if (totalPage === 0) {
     return null;
   }
 
   const DISPLAY_PAGE_COUNT = 3;
 
   let displayingPages: number[];
-  if (totalPage == 1) {
+  if (totalPage === 1) {
     displayingPages = [];
-  } else if (currentPage == 1) {
+  } else if (currentPage === 1) {
     displayingPages = [2, 3];
-  } else if (currentPage == 2) {
+  } else if (currentPage === 2) {
     displayingPages = [2, 3, 4];
-  } else if (currentPage == totalPage) {
+  } else if (currentPage === totalPage) {
     displayingPages = [totalPage - 2, totalPage - 1];
-  } else if (currentPage == totalPage - 1) {
+  } else if (currentPage === totalPage - 1) {
     displayingPages = [totalPage - 3, totalPage - 2, totalPage - 1];
   } else {
     displayingPages = [currentPage - 1, currentPage, currentPage + 1];
@@ -238,16 +238,16 @@ export function PaginationComponent() {
         <div className="flex flex-row sm:justify-center justify-start w-full">
           <PaginationItem
             className={
-              currentPage == 1 || currentPage == 2 ? "" : "hidden md:block"
+              currentPage === 1 || currentPage === 2 ? "" : "hidden md:block"
             }
           >
             <Link to="/$game/search/$word" params={params} search={{ page: 1 }}>
-              <PaginationLink isActive={currentPage == 1}>1</PaginationLink>
+              <PaginationLink isActive={currentPage === 1}>1</PaginationLink>
             </Link>
           </PaginationItem>
           {currentPage >= 4 ? (
             <PaginationItem
-              className={currentPage == 1 ? "" : "hidden sm:block"}
+              className={currentPage === 1 ? "" : "hidden sm:block"}
             >
               <PaginationEllipsis />
             </PaginationItem>
@@ -255,7 +255,7 @@ export function PaginationComponent() {
           {displayingPages.map((page) => (
             <PaginationItem key={page}>
               <Link to="/$game/search/$word" params={params} search={{ page }}>
-                <PaginationLink isActive={currentPage == page}>
+                <PaginationLink isActive={currentPage === page}>
                   {page}
                 </PaginationLink>
               </Link>
@@ -274,7 +274,7 @@ export function PaginationComponent() {
               params={params}
               search={{ totalPage }}
             >
-              <PaginationLink isActive={currentPage == totalPage}>
+              <PaginationLink isActive={currentPage === totalPage}>
                 {totalPage}
               </PaginationLink>
             </Link>
