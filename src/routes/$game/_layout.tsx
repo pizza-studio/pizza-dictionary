@@ -201,7 +201,10 @@ function DropDownMenu() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <a href="https://github.com/pizza-studio" target="_blank">
+          <a
+            href="https://github.com/pizza-studio/pizza-dictionary"
+            target="_blank"
+          >
             <Github className="mr-2 h-4 w-4" />
             <span>GitHub</span>
           </a>
