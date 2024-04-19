@@ -283,7 +283,7 @@ export function PaginationComponent() {
             <Link
               to="/$game/search/$word"
               params={params}
-              search={{ totalPage }}
+              search={{ page: totalPage }}
             >
               <PaginationLink isActive={currentPage === totalPage}>
                 {totalPage}
