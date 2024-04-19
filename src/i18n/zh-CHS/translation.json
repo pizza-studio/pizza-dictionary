@@ -1,0 +1,50 @@
+{
+    "General": {
+        "AppName": "披萨词典",
+        "PizzaStudio": "披萨工作室",
+        "Genshin": "原神",
+        "HSR": "崩坏：星穹铁道",
+        "Language": {
+            "en": "英文",
+            "chs": "简体中文",
+            "cht": "繁体中文",
+            "pt": "葡萄牙文",
+            "jp": "日文",
+            "ru": "俄文",
+            "th": "泰文",
+            "de": "德文",
+            "es": "西班牙文",
+            "id": "印尼文",
+            "kr": "韩文",
+            "vi": "越南文",
+            "fr": "法文"
+        }
+    },
+    "Search": {
+        "Index": {
+            "SearchIn": "查找词典",
+            "Placeholder": {
+                "Genshin": "蒙德、温迪、甜甜花……",
+                "HSR": "黑塔空间站、姬子、拟造花萼……"
+            }
+        },
+        "Searching": {
+            "Pagination": {
+                "Previous": "上一页",
+                "Next": "下一页"
+            }
+        },
+        "Setting": {
+            "ResultLanguage": "翻译语言",
+            "Appreance": {
+                "Trigger": "外观",
+                "Light": "浅色模式",
+                "Dark": "深色模式",
+                "System": "跟随系统"
+            }
+        },
+        "Language": {
+            "Trigger": "语言"
+        }
+    }
+}
