@@ -10,7 +10,11 @@ const QUERY_PLACEHOLDER_MAP = {
 
 const queryAtom = atom("");
 
-const Index = () => {
+export const Route = createLazyFileRoute("/$game/_layout/")({
+  component: Index,
+});
+
+function Index() {
   const [query, setQuery] = useAtom(queryAtom);
 
   const navigate = useNavigate();
@@ -53,8 +57,4 @@ const Index = () => {
       </form>
     </div>
   );
-};
-
-export const Route = createLazyFileRoute("/$game/_layout/")({
-  component: Index,
-});
+}
